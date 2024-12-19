@@ -1,0 +1,25 @@
+Sample.ID,Sample.name,Condition,RDS,Time,Day,N0,Replicate,Batch,Dissection,Genotype,Clone,Multiplexing,Directory,Chip.10x.type
+33,100_cells_120h_rep1,100cells_120h,120h_size_rep1_100_cells_120h_rep1,120h,5 days,100,1,1,Whole,129sv.WT,none,CellPlex,120h_size_rep1,V3.1
+34,300_cells_120h_rep1,300cells_120h,120h_size_rep1_300_cells_120h_rep1,120h,5 days,300,1,1,Whole,129sv.WT,none,CellPlex,120h_size_rep1,V3.1
+35,600_cells_120h_rep1,600cells_120h,120h_size_rep1_600_cells_120h_rep1,120h,5 days,600,1,1,Whole,129sv.WT,none,CellPlex,120h_size_rep1,V3.1
+36,1800_cells_120h_rep1,1800cells_120h,120h_size_rep1_1800_cells_120h_rep1,120h,5 days,1800,1,1,Whole,129sv.WT,none,CellPlex,120h_size_rep1,V3.1
+37,5400_cells_120h_rep1,5400cells_120h,120h_size_rep1_5400_cells_120h_rep1,120h,5 days,5400,1,1,Whole,129sv.WT,none,CellPlex,120h_size_rep1,V3.1
+38,5400_cells_120h.bis_rep1,5400cells_120h,120h_size_rep1_5400_cells_120h.bis_rep1,120h,5 days,5400,1,1,Whole,129sv.WT,none,CellPlex,120h_size_rep1,V3.1
+39,100_cells_144h_rep1,100cells_144h,144h_size_rep1_100_cells_144h_rep1,144h,6 days,100,1,1,Whole,129sv.WT,none,CellPlex,144h_size_rep1,V3.1
+40,300_cells_144h_rep1,300cells_144h,144h_size_rep1_300_cells_144h_rep1,144h,6 days,300,1,1,Whole,129sv.WT,none,CellPlex,144h_size_rep1,V3.1
+41,600_cells_144h_rep1,600cells_144h,144h_size_rep1_600_cells_144h_rep1,144h,6 days,600,1,1,Whole,129sv.WT,none,CellPlex,144h_size_rep1,V3.1
+42,1800_cells_144h_rep1,1800cells_144h,144h_size_rep1_1800_cells_144h_rep1,144h,6 days,1800,1,1,Whole,129sv.WT,none,CellPlex,144h_size_rep1,V3.1
+43,5400_cells_144h_rep1,5400cells_144h,144h_size_rep1_5400_cells_144h_rep1,144h,6 days,5400,1,1,Whole,129sv.WT,none,CellPlex,144h_size_rep1,V3.1
+44,5400_cells_144h.bis_rep1,5400cells_144h,144h_size_rep1_5400_cells_144h.bis_rep1,144h,6 days,5400,1,1,Whole,129sv.WT,none,CellPlex,144h_size_rep1,V3.1
+45,100_cells_120h_rep2,100cells_120h,120h_size_rep2_100_cells_120h_rep2,120h,5 days,100,2,2,Whole,129sv.WT,none,CellPlex,120h_size_rep2,V3.1
+46,300_cells_120h_rep2,300cells_120h,120h_size_rep2_300_cells_120h_rep2,120h,5 days,300,2,2,Whole,129sv.WT,none,CellPlex,120h_size_rep2,V3.1
+47,600_cells_120h_rep2,600cells_120h,120h_size_rep2_600_cells_120h_rep2,120h,5 days,600,2,2,Whole,129sv.WT,none,CellPlex,120h_size_rep2,V3.1
+48,1800_cells_120h_rep2,1800cells_120h,120h_size_rep2_1800_cells_120h_rep2,120h,5 days,1800,2,2,Whole,129sv.WT,none,CellPlex,120h_size_rep2,V3.1
+49,5400_cells_120h_rep2,5400cells_120h,120h_size_rep2_5400_cells_120h_rep2,120h,5 days,5400,2,2,Whole,129sv.WT,none,CellPlex,120h_size_rep2,V3.1
+50,5400_cells_120h.bis_rep2,5400cells_120h,120h_size_rep2_5400_cells_120h.bis_rep2,120h,5 days,5400,2,2,Whole,129sv.WT,none,CellPlex,120h_size_rep2,V3.1
+51,100_cells_144h_rep2,100cells_144h,144h_size_rep2_100_cells_144h_rep2,144h,6 days,100,2,2,Whole,129sv.WT,none,CellPlex,144h_size_rep2,V3.1
+52,300_cells_144h_rep2,300cells_144h,144h_size_rep2_300_cells_144h_rep2,144h,6 days,300,2,2,Whole,129sv.WT,none,CellPlex,144h_size_rep2,V3.1
+53,600_cells_144h_rep2,600cells_144h,144h_size_rep2_600_cells_144h_rep2,144h,6 days,600,2,2,Whole,129sv.WT,none,CellPlex,144h_size_rep2,V3.1
+54,1800_cells_144h_rep2,1800cells_144h,144h_size_rep2_1800_cells_144h_rep2,144h,6 days,1800,2,2,Whole,129sv.WT,none,CellPlex,144h_size_rep2,V3.1
+55,5400_cells_144h_rep2,5400cells_144h,144h_size_rep2_5400_cells_144h_rep2,144h,6 days,5400,2,2,Whole,129sv.WT,none,CellPlex,144h_size_rep2,V3.1
+56,5400_cells_144h.bis_rep2,5400cells_144h,144h_size_rep2_5400_cells_144h.bis_rep2,144h,6 days,5400,2,2,Whole,129sv.WT,none,CellPlex,144h_size_rep2,V3.1

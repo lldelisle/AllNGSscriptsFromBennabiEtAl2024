@@ -1,0 +1,160 @@
+---
+title: "Module score"
+author: "Alexandre Mayran"
+format: html
+editor: source
+---
+
+```{r, setup, include=FALSE}
+# choose working directory
+wd <- "~/AllNGSscriptsFromBennabiEtAl2024/"
+knitr::opts_knit$set(root.dir = wd)
+```
+
+# *Get sc object and genes up-regulated and down-regulated genes in 300/1800 cells*
+
+*Here, we load all the required packages*
+
+```{r}
+#| label: Loading packages and variable
+scRNAseqFunctions.file.path <- "scRNAseq/scRNAseqFunctions.R"
+scRNAseqParam.file.path <- "scRNAseq/scRNAseqWTparams.R"
+source(scRNAseqFunctions.file.path)
+source(scRNAseqParam.file.path)
+```
+
+## *We define the parameters for display*
+
+```{r}
+# Here you need to define the name of the folder where the RDS is
+RDSfolder <- "../mountDuboule/Alex/R/RDS"
+# This output.directory will be used for plots
+output.directory <- "output.files/combine_scRNAseq_RNAseq/"
+# Here put name of RDS as given in step 2
+nameRDS <- "combined.size_49049edf.RDS"
+# File with filtered genes
+filtered.table.file <- "BRBseq/outputs/DESeq2_pairwise/signif_extremes_clustering.txt"
+# Initiate the parameters which will be used for the plots
+params <- list(nameRDS = nameRDS, Col.featurePlot = Col.featurePlot)
+# Check the RDS analyzed file exists:
+if(file.exists(file.path(RDSfolder, "analyzed", paste0("analyzed.", nameRDS)))){
+  print(paste0("analyzed.", nameRDS," RDS file found, you can proceed"))
+} else{
+  stop(paste0("analyzed.", nameRDS," RDS file not found, check the location or run Step3"))
+}
+```
+
+## *Load Seurat object*
+
+```{r}
+combined.seurat <- readRDS(file.path(RDSfolder, "analyzed", paste0("analyzed.", nameRDS)))
+```
+
+## *Get DE genes*
+
+```{r}
+filteredSimplifiedTable <- read.delim(filtered.table.file, check.names = FALSE)
+
+```
+
+# *Assign score to each cell*
+
+## *Use addModuleScore to identify which cells have activated the different genes of the different modules*
+
+```{r}
+nClusters <- 6
+for (my.k in unique(filteredSimplifiedTable[,paste0("k",nClusters)])){
+      print(my.k)
+  if (!paste0(my.k,".score.",nClusters,"clusters") %in% colnames(combined.seurat[[]])) {
+    gene.set <- filteredSimplifiedTable$gene_short_name[filteredSimplifiedTable[,paste0("k",nClusters)] == my.k]
+    gene.set.list <- list()
+    gene.set.list[[my.k]] <- gene.set
+    combined.seurat <- AddModuleScore(combined.seurat, features = gene.set.list, name = paste0(my.k,".score.",nClusters,"clusters"),
+                                      ctrl = length(gene.set))
+    storeNewRDS <- TRUE
+    print(paste0(my.k, "... done"))
+  }
+  
+}
+```
+
+```{r}
+params$current.fig <- SwitchFigure(Fig = 2, Panel = paste0("moduleScore"))
+
+for (my.k in unique(filteredSimplifiedTable[,paste0("k",nClusters)])){
+ g <- featurePlotMayran(paste0("combined.seurat"),
+                         gene.to.display = paste0(my.k,".score.",nClusters,"clusters1"), params = params,
+                         pt.size = 0.5, split.by = "N0", by.rows = F, width = 12, height = 4)
+ print(g)
+ 
+}
+```
+
+## Plot heatmap of transcriptional module (Fig 4E)
+
+Let's compute count per cluster per condition
+
+```{r}
+my.genes <- filteredSimplifiedTable$gene_short_name[filteredSimplifiedTable[,paste0("k",nClusters)] == "C"]
+# my.genes <- filteredSimplifiedTable$gene_short_name
+
+# Using raw counts
+all_counts.per.cluster.N0 <- split(
+  FetchData(combined.seurat, vars = c(my.genes, "nCount_RNA"), slot = "count"),
+  paste0(combined.seurat$Fate, "__", combined.seurat$N0))
+
+all_counts.per.cluster.N0.sum <- do.call(cbind, lapply(all_counts.per.cluster.N0, colSums))
+
+average.per.cluster.N0 <- log(1 + 1e4 * t(t(all_counts.per.cluster.N0.sum[-which(rownames(all_counts.per.cluster.N0.sum) == "nCount_RNA"), ]) / all_counts.per.cluster.N0.sum["nCount_RNA", ]))
+```
+
+```{r}
+annot.fates <- data.frame(Fate = names(my.fate.colors))
+rownames(annot.fates) <- names(my.fate.colors)
+params$current.fig <- SwitchFigure(Fig = 1, Panel = "Heatmap.cluster")
+scaled.df <- t(apply(average.per.cluster.N0, 1, scale))
+colnames(scaled.df) <- colnames(average.per.cluster.N0)
+for (my.N0 in levels(combined.seurat$N0)) {
+    new.matrix <- scaled.df[, paste0(names(my.fate.colors), "__", my.N0)]
+  colnames(new.matrix) <- names(my.fate.colors)
+  
+  # title <- bquote(italic('HoxB'^{.(unname(hoxbgeno[geno]))}))
+  pheatmap(new.matrix,
+           annotation_col = annot.fates,
+           annotation_colors = list(
+             Fate = my.fate.colors
+           ),
+           breaks = c(min(scaled.df) - 1e-6, seq(-2, 2, length.out = 98), max(scaled.df) + 1e-6),
+           cluster_cols = FALSE,
+           cluster_rows = FALSE,
+           labels_row = "",
+           # width = 8/3, height = 3,
+           main = my.N0,
+           annotation_legend = T, filename = file.path(params$current.fig, paste0(my.N0,"heatmap.pdf")), width = 5, height = 6
+  )
+    pheatmap(new.matrix,
+           annotation_col = annot.fates,
+           annotation_colors = list(
+             Fate = my.fate.colors
+           ),
+           breaks = c(min(scaled.df) - 1e-6, seq(-2, 2, length.out = 98), max(scaled.df) + 1e-6),
+           cluster_cols = FALSE,
+           cluster_rows = FALSE,
+           labels_row = "",
+           # width = 8/3, height = 3,
+           main = my.N0,
+           annotation_legend = T
+  )
+}
+```
+
+```{r}
+if(storeNewRDS){
+  print("Saved analysed RDS does not contain scores for the modules, will save it now..")
+  saveRDS(combined.seurat,file.path(RDSfolder, "analyzed", paste0("analyzed.",nameRDS)))
+  print("Done")
+} else{
+  print("Saved analysed RDS already contains scores for the modules, visualization complete")
+}
+
+```

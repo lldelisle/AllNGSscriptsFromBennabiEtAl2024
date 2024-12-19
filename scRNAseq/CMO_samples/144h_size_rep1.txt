@@ -1,0 +1,2 @@
+Cell Multiplexing Oligo 301	Cell Multiplexing Oligo 302	Cell Multiplexing Oligo 303	Cell Multiplexing Oligo 304	Cell Multiplexing Oligo 305	Cell Multiplexing Oligo 306
+100_cells_144h_rep1	300_cells_144h_rep1	600_cells_144h_rep1	1800_cells_144h_rep1	5000_cells_144h_rep1	5000_cells_144h.bis_rep1
